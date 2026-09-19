@@ -1,0 +1,31 @@
+{
+  "counts_by_class": {
+    "normal": 144,
+    "dry": 36,
+    "lean": 36,
+    "loose": 36,
+    "screwdrop": 36
+  },
+  "counts_by_velocity": {
+    "dry_60": 18,
+    "dry_80": 9,
+    "dry_100": 9,
+    "lean_60": 18,
+    "lean_80": 9,
+    "lean_100": 9,
+    "loose_60": 9,
+    "loose_80": 18,
+    "loose_100": 9,
+    "normal_60": 48,
+    "normal_80": 48,
+    "normal_100": 48,
+    "screwdrop_60": 9,
+    "screwdrop_80": 18,
+    "screwdrop_100": 9
+  },
+  "role_balance": {
+    "not_applicable": 144,
+    "test": 72,
+    "train": 72
+  }
+}

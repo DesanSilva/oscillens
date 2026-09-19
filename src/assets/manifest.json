@@ -1,0 +1,8 @@
+{
+  "timestamp": 1789813893.2838445,
+  "source_mode": "offline",
+  "etl_policy_hash": "bf3c00d0e004d",
+  "p_fault_source": "fused_detector_ensemble",
+  "vib_feat_count": 888,
+  "aud_feat_count": 600
+}

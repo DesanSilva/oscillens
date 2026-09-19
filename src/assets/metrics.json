@@ -1,0 +1,43 @@
+{
+  "fusion_f1": {
+    "value": 1.0,
+    "split": "validation clips",
+    "n": 44,
+    "source": "04_model_training_and_tuning.ipynb"
+  },
+  "fusion_auc": {
+    "value": 1.0,
+    "split": "validation clips",
+    "n": 44,
+    "source": "04_model_training_and_tuning.ipynb"
+  },
+  "vibration_mc_acc": {
+    "value": 0.955,
+    "split": "validation clips (faults only)",
+    "n": 22,
+    "source": "04_model_training_and_tuning.ipynb"
+  },
+  "vibration_mc_f1": {
+    "value": 0.953,
+    "split": "validation clips (faults only)",
+    "n": 22,
+    "source": "04_model_training_and_tuning.ipynb"
+  },
+  "vib_features": {
+    "value": 888,
+    "label": "vibration clip features"
+  },
+  "aud_features": {
+    "value": 600,
+    "label": "audio clip features"
+  },
+  "fused_features": {
+    "value": 1489,
+    "label": "fused features (incl. cross-modal ratio)"
+  },
+  "split_sizes": {
+    "train": 200,
+    "val": 44,
+    "test": 44
+  }
+}

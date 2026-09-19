@@ -1,0 +1,37 @@
+{
+  "abnormal__dry__med_vel100_clean_dry__0001": {
+    "class": "dry",
+    "ios": true,
+    "android": true
+  },
+  "abnormal__lean__med_vel100_clean_lean__0001": {
+    "class": "lean",
+    "ios": true,
+    "android": true
+  },
+  "abnormal__loose__med_vel80_clean_loose__0001": {
+    "class": "loose",
+    "ios": true,
+    "android": true
+  },
+  "abnormal__screwdrop__med_vel80_clean_screwdrop__0001": {
+    "class": "screwdrop",
+    "ios": true,
+    "android": true
+  },
+  "normal__med_vel60_clean__0001": {
+    "class": "normal",
+    "ios": true,
+    "android": true
+  },
+  "normal__med_vel80_clean__0001": {
+    "class": "normal",
+    "ios": false,
+    "android": false
+  },
+  "continuous_stream": {
+    "class": "mixed",
+    "ios": false,
+    "android": false
+  }
+}

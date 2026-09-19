@@ -1,0 +1,42 @@
+[
+  {
+    "strategy":"Raw classifier",
+    "recall":1.0,
+    "f1":1.0,
+    "specificity":1.0,
+    "false_alarms":0,
+    "missed":0
+  },
+  {
+    "strategy":"Moving avg (k=3)",
+    "recall":1.0,
+    "f1":0.995,
+    "specificity":0.99,
+    "false_alarms":2,
+    "missed":0
+  },
+  {
+    "strategy":"EMA (\u03b1=0.4)",
+    "recall":1.0,
+    "f1":0.99,
+    "specificity":0.98,
+    "false_alarms":4,
+    "missed":0
+  },
+  {
+    "strategy":"N-of-M (3\/5)",
+    "recall":0.99,
+    "f1":0.99,
+    "specificity":0.99,
+    "false_alarms":2,
+    "missed":2
+  },
+  {
+    "strategy":"Persistence (K=3)",
+    "recall":0.99,
+    "f1":0.995,
+    "specificity":1.0,
+    "false_alarms":0,
+    "missed":2
+  }
+]

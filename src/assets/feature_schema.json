@@ -1,0 +1,22 @@
+{
+  "vibration": {
+    "count": 888,
+    "examples": [
+      "vib_ch1_mean_mean",
+      "vib_ch1_mean_std",
+      "vib_ch1_mean_min",
+      "vib_ch1_mean_max",
+      "vib_ch1_mean_median"
+    ]
+  },
+  "audio": {
+    "count": 600,
+    "examples": [
+      "aud_rms_mean",
+      "aud_rms_std",
+      "aud_rms_min",
+      "aud_rms_max",
+      "aud_rms_median"
+    ]
+  }
+}

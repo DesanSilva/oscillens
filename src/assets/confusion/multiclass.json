@@ -1,0 +1,36 @@
+{
+  "labels": [
+    "dry",
+    "lean",
+    "loose",
+    "screwdrop"
+  ],
+  "matrix": [
+    [
+      4,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      6,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      5,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      6
+    ]
+  ],
+  "split": "validation clips, faults only (n=22)",
+  "note": "Single error: one dry clip predicted as lean. Both are non-impulsive faults."
+}

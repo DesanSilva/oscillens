@@ -1,0 +1,17 @@
+{
+  "labels": [
+    "Normal",
+    "Fault"
+  ],
+  "matrix": [
+    [
+      22,
+      0
+    ],
+    [
+      0,
+      22
+    ]
+  ],
+  "split": "validation clips (n=44)"
+}
