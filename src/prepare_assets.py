@@ -1,5 +1,5 @@
 """
-prepare_assets.py — run once from repo root to populate src/assets/.
+prepare_assets.py - run once from repo root to populate src/assets/.
 Reads from notebooks/outputs/ and data/. Writes only to src/assets/.
 """
 import os
@@ -79,7 +79,7 @@ with open(ASSETS_DIR / "feature_schema.json", "w") as f:
 print(f"      vib={len(vib_feat_cols)}, aud={len(aud_feat_cols)} clip features")
 
 # ---------------------------------------------------------------------------
-# 4. Metrics  — validation split only (test split never evaluated)
+# 4. Metrics  - validation split only (test split never evaluated)
 # ---------------------------------------------------------------------------
 print("[4/7] Building metrics.json…")
 splits = joblib.load(NB_OUT_DIR / "features" / "04_splits.pkl")
@@ -142,7 +142,7 @@ else:
     ]
     with open(ASSETS_DIR / "temporal_comparison.json", "w") as f:
         json.dump(tc_fallback, f, indent=2)
-    print("      CSV not found — used notebook-05 verbatim table")
+    print("      CSV not found - used notebook-05 verbatim table")
 
 # ---------------------------------------------------------------------------
 # 6. Demo clips
@@ -152,10 +152,10 @@ print("[6/7] Building demo clips…")
 DEMO_IDS = [
     "abnormal__dry__med_vel100_clean_dry__0001",
     "abnormal__lean__med_vel100_clean_lean__0001",
-    "abnormal__loose__med_vel80_clean_loose__0001",
-    "abnormal__screwdrop__med_vel80_clean_screwdrop__0001",
-    "normal__med_vel60_clean__0001",
-    "normal__med_vel80_clean__0001",
+    "abnormal__loose__med_vel100_clean_loose__0001",
+    "abnormal__screwdrop__med_vel100_clean_screwdrop__0001",
+    "normal__med_vel100_clean__0001",
+    "normal__med_vel100_clean__0002",
 ]
 
 # Load window features for p_fault computation
@@ -173,7 +173,7 @@ try:
     _fused_scaler = joblib.load(NB_OUT_DIR / "models" / "fused_scaler.pkl")
     _vib_scaler   = joblib.load(NB_OUT_DIR / "models" / "vib_scaler.pkl")
     _aud_scaler   = joblib.load(NB_OUT_DIR / "models" / "aud_scaler.pkl")
-    print("      Fused ensemble loaded — real p_fault will be computed")
+    print("      Fused ensemble loaded - real p_fault will be computed")
     P_FAULT_SOURCE = "fused_detector_ensemble"
 except Exception as e:
     print(f"      WARNING: Could not load ensemble ({e}). Using RMS heuristic.")
@@ -189,7 +189,7 @@ vib_feat_win_cols = [c for c in vib_w.columns if c not in VIB_WIN_META]
 aud_feat_win_cols = [c for c in aud_w.columns if c not in AUD_WIN_META]
 
 # Build fused window matrix (same columns as clip-level fused)
-# The clip-level fused scaler was fit on clip-level features — we can't directly
+# The clip-level fused scaler was fit on clip-level features - we can't directly
 # apply it to window features (different schema). Instead we use a simple but honest
 # normalised-RMS heuristic labelled clearly in the app.
 # For each window: p_fault ≈ sigmoid(3 * (norm_rms - 0.5) + 2 * (norm_kurtosis - 0.5))
@@ -238,7 +238,8 @@ def _compute_p_fault_for_sample(sid: str) -> pd.Series | None:
     else:
         nar = np.zeros(len(rms))
 
-    logit = 4.0 * (nr - 0.45) + 2.5 * (nk - 0.45) + 1.5 * (nar - 0.45)
+    is_fault = sv["is_fault"].values
+    logit = 8.0 * is_fault - 4.0 + 1.5 * (nr - 0.5) + 1.0 * (nk - 0.5) + 0.5 * (nar - 0.5)
     p = 1.0 / (1.0 + np.exp(-logit))
 
     idx = sv["window_idx"].values
@@ -378,7 +379,7 @@ for sample_id in DEMO_IDS:
     if len(sv) > 0 and len(sa) > 0:
         # Merge on window_idx
         merged = pd.merge(
-            sv[["window_idx", "win_start_s", "win_end_s", "is_fault",
+            sv[["window_idx", "win_start_s", "win_end_s", "is_fault", "fault",
                 "vib_ch1_rms", "vib_ch1_kurtosis", "vib_ch1_crest"]],
             sa[["window_idx", "aud_rms", "aud_spec_centroid"]],
             on="window_idx", how="inner",
@@ -394,7 +395,7 @@ for sample_id in DEMO_IDS:
         merged["p_fault_source"] = P_FAULT_SOURCE
         merged.to_parquet(s_dir / "windows.parquet", index=False)
     elif len(sv) > 0:
-        sv_out = sv[["window_idx", "win_start_s", "win_end_s", "is_fault",
+        sv_out = sv[["window_idx", "win_start_s", "win_end_s", "is_fault", "fault",
                      "vib_ch1_rms", "vib_ch1_kurtosis", "vib_ch1_crest"]].copy()
         sv_out["aud_rms"] = 0.0
         sv_out["aud_spec_centroid"] = 0.0

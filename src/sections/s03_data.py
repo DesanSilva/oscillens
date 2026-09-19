@@ -1,4 +1,4 @@
-"""s03_data.py — Data section: provenance, inventory, coverage, signal previews."""
+"""s03_data.py - Data section: provenance, inventory, coverage, signal previews."""
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -128,7 +128,7 @@ any rerun that would produce different sample IDs or media settings aborts rathe
             "loose":     "Periodic impact spikes at regular intervals; consistent with chatter at belt velocity.",
             "screwdrop": "Isolated high-amplitude transient bursts; consistent with a foreign object striking the belt.",
         }
-        fig_vib = figures.create_waveform_plot(vib, t_vib, title=f"Vibration — {selected_cls} ({sid})")
+        fig_vib = figures.create_waveform_plot(vib, t_vib, title=f"Vibration - {selected_cls} ({sid})")
         st.plotly_chart(fig_vib, use_container_width=True)
         figcaption(hints.get(selected_cls, "") + f" Sample: {sid}.")
     else:
@@ -141,7 +141,7 @@ any rerun that would produce different sample IDs or media settings aborts rathe
         )
         st.plotly_chart(fig_psd, use_container_width=True)
         figcaption(
-            f"Welch PSD — channel 1, {selected_cls} clip. "
+            f"Welch PSD - channel 1, {selected_cls} clip. "
             "Bands are physical (corrected for 25 kHz storage rate)."
         )
 

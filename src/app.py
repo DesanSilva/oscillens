@@ -1,5 +1,5 @@
 """
-app.py — SSCC multimodal anomaly detection presentation.
+app.py - SSCC multimodal anomaly detection presentation.
 Single scrollable page; sticky sidebar navigation; sections render in order.
 Run from repo root: streamlit run src/app.py
 """
@@ -37,17 +37,6 @@ with st.sidebar:
     st.caption("Multimodal anomaly detection for conveyor systems")
     st.markdown("---")
 
-    manifest = data_mod.load_manifest()
-    if manifest:
-        st.markdown("### Dataset")
-        ts = manifest.get("timestamp")
-        if ts:
-            import datetime
-            dt = datetime.datetime.fromtimestamp(ts).strftime("%Y-%m-%d %H:%M")
-            st.caption(f"Assets built: {dt}")
-        st.caption(f"ETL policy hash: `{manifest.get('etl_policy_hash','—')}`")
-        st.caption(f"p_fault source: `{manifest.get('p_fault_source','—')}`")
-        st.markdown("---")
 
     nav_items = [
         ("context",     "1. Problem and context"),
@@ -74,7 +63,7 @@ st.markdown(
 )
 st.markdown(
     '<p style="font-size:17px;color:#4A5560;margin-top:0.2rem;max-width:70ch;">'
-    "A reproducible multimodal fault detection pipeline for conveyor systems — "
+    "A reproducible multimodal fault detection pipeline for conveyor systems - "
     "vibration + audio feature fusion with an explicit temporal decision layer."
     "</p>",
     unsafe_allow_html=True,
@@ -83,36 +72,15 @@ st.markdown('<hr style="margin:1rem 0 2rem 0;">', unsafe_allow_html=True)
 
 # ── Sections ───────────────────────────────────────────────────────────────
 s01_context.render()
-st.divider()
-
 s02_gap.render()
-st.divider()
-
 s03_data.render()
-st.divider()
-
 s04_solution.render()
-st.divider()
-
 s05_methodology.render()
-st.divider()
-
 s06_results.render()
-st.divider()
-
 s07_demo.render()
-st.divider()
-
 s08_deployment.render()
-st.divider()
-
 s09_scalability.render()
-st.divider()
-
 s10_limitations.render()
-st.divider()
-
 s11_further_work.render()
-st.divider()
-
 s12_conclusion.render()
+

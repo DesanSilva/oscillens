@@ -1,4 +1,4 @@
-"""s09_scalability.py — Scalability and alternative architectures (design only)."""
+"""s09_scalability.py - Scalability and alternative architectures (design only)."""
 import streamlit as st
 from theme import section_header, figcaption
 
@@ -71,7 +71,7 @@ def render():
 - **Per-machine model instances vs. conditioned model.** Adding machine ID and belt speed as features
   allows one model to serve a fleet; requires pooling labelled data across machines.
 - **Shard-and-stream ingestion.** The ETL already demonstrates TAR-sharded ingestion with resumable
-  state — this structure scales to streaming ingestion over MQTT or Kafka with minimal changes.
+  state - this structure scales to streaming ingestion over MQTT or Kafka with minimal changes.
 - **25 kHz vibration limit.** The current downsampling is a size-driven compromise. If bearing
   defect frequencies (often 5–20 kHz for small bearings) are diagnostically important, the
   storage rate would need revisiting.

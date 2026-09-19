@@ -1,4 +1,4 @@
-"""s01_context.py — Problem and industrial context."""
+"""s01_context.py - Problem and industrial context."""
 import streamlit as st
 from theme import section_header
 
@@ -11,7 +11,7 @@ Unplanned stoppages of conveyor systems disrupt production lines and incur signi
 
 Conveyor systems are already equipped with cameras for quality inspection in most facilities.
 Adding an acoustic and vibration health channel lets that same edge device perform predictive maintenance
-without deploying additional hardware — the sensors ride on installed infrastructure.
+without deploying additional hardware - the sensors ride on installed infrastructure.
 
 **Fault taxonomy** (as labelled in the SSCC dataset):
 

@@ -1,5 +1,5 @@
 """
-data.py — cached loaders over src/assets/ only.
+data.py - cached loaders over src/assets/ only.
 All heavy I/O is cached; callers get plain Python structures or DataFrames.
 """
 import json

@@ -1,5 +1,5 @@
 """
-figures.py — Plotly and Matplotlib figure builders.
+figures.py - Plotly and Matplotlib figure builders.
 All figures use the project palette; no purple/violet outside categorical plot series.
 """
 import numpy as np
@@ -50,7 +50,7 @@ def apply_plotly_layout(fig: go.Figure, title: str = "", height: int = 300) -> g
 CH_COLORS = ["#1F5C8B", "#4A5560", "#2F7D4F", "#C2410C"]
 
 def create_waveform_plot(vib_data: np.ndarray, t_axis: np.ndarray,
-                         title: str = "Vibration — 4 channels") -> go.Figure:
+                         title: str = "Vibration - 4 channels") -> go.Figure:
     fig = go.Figure()
     for i in range(vib_data.shape[0]):
         fig.add_trace(go.Scatter(
@@ -120,7 +120,7 @@ def create_psd_plot(f: np.ndarray, Pxx: np.ndarray,
                 annotation_text=bname, annotation_position="top",
                 annotation_font_size=10,
             )
-    apply_plotly_layout(fig, "Welch PSD — channel 1 (physical 25 kHz)", 280)
+    apply_plotly_layout(fig, "Welch PSD - channel 1 (physical 25 kHz)", 280)
     fig.update_xaxes(title_text="Frequency (Hz)")
     fig.update_yaxes(title_text="Power (dB/Hz)")
     return fig
@@ -149,7 +149,7 @@ def create_envelope_plot(env_trace: np.ndarray, t_axis: np.ndarray,
     return fig
 
 
-# ── Combined signal panel (demo — shared x-axis) ──────────────────────────
+# ── Combined signal panel (demo - shared x-axis) ──────────────────────────
 
 def create_combined_signal_panel(
     vib_data: np.ndarray,
@@ -162,15 +162,15 @@ def create_combined_signal_panel(
 ) -> go.Figure:
     """
     Subplot stack sharing x-axis:
-      row 1  — 4-ch vibration
-      row 2  — prediction lane (p_fault step trace + threshold + alarm shading)
+      row 1  - 4-ch vibration
+      row 2  - prediction lane (p_fault step trace + threshold + alarm shading)
     """
     fig = make_subplots(
         rows=2, cols=1,
         shared_xaxes=True,
         row_heights=[0.65, 0.35],
         vertical_spacing=0.04,
-        subplot_titles=["Vibration — 4 channels (decimated, 5 s)", f"Fault probability — {strategy_label}"],
+        subplot_titles=["Vibration - 4 channels (decimated, 5 s)", f"Fault probability - {strategy_label}"],
     )
 
     # Row 1: vibration
@@ -320,7 +320,7 @@ def create_temporal_bar_chart(temporal_df: pd.DataFrame) -> go.Figure:
         marker_line_color=config.PALETTE["hairline"],
         marker_line_width=0.8,
     ))
-    apply_plotly_layout(fig, "False alarms vs missed detections — validation windows", 300)
+    apply_plotly_layout(fig, "False alarms vs missed detections - validation windows", 300)
     fig.update_layout(barmode="group")
     fig.update_xaxes(title_text="Strategy")
     fig.update_yaxes(title_text="Count")

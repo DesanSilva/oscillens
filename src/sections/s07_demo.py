@@ -1,5 +1,5 @@
 """
-s07_demo.py — Live demonstration section.
+s07_demo.py - Live demonstration section.
 Full-width dashboard: clip selector, audio player, synced signal panel,
 prediction lane with interactive decision controls, feature inspector.
 """
@@ -67,7 +67,7 @@ def render():
         cls  = videos_meta[sid]["class"]
         vel  = sid.split("vel")[1].split("_")[0] if "vel" in sid else "?"
         role = "fault" if cls != "normal" else "normal"
-        return f"{cls.title()} — vel {vel} rpm  [{role}]"
+        return f"{cls.title()} - vel {vel} rpm  [{role}]"
 
     # ── Clip selector ──────────────────────────────────────────────────────
     st.markdown("**Select a demo clip to explore its signals and model output.**")
@@ -103,6 +103,29 @@ def render():
         elif strategy == "Persistence":
             K = param_cols[0].slider("Consecutive windows K", 1, 10, 3)
 
+    with st.expander("Smoothing equations & definitions", expanded=False):
+        st.markdown(r"""
+        **1. Moving Average**
+        Computes the unweighted mean over the last $k$ windows.
+
+        $$ P_{smooth}[t] = \frac{1}{k} \sum_{i=0}^{k-1} P_{raw}[t-i] $$
+        
+        **2. Exponential Moving Average (EMA)**
+        Applies exponentially decreasing weights over time. $\alpha$ is the smoothing factor ($0 < \alpha \le 1$).
+
+        $$ P_{smooth}[t] = \alpha P_{raw}[t] + (1 - \alpha) P_{smooth}[t-1] $$
+        
+        **3. N-of-M**
+        Triggers an alarm if at least $N$ out of the last $M$ windows exceed the threshold $\theta$.
+
+        $$ \text{Alarm}[t] = \left( \sum_{i=0}^{M-1} \mathbb{I}(P_{smooth}[t-i] \ge \theta) \right) \ge N $$
+        
+        **4. Persistence**
+        A strict case of N-of-M where $N = M = K$. Triggers only if $K$ consecutive windows exceed $\theta$.
+
+        $$ \text{Alarm}[t] = \prod_{i=0}^{K-1} \mathbb{I}(P_{smooth}[t-i] \ge \theta) $$
+        """)
+
     # ── Render Logic ───────────────────────────────────────────────────────
     def render_ui(windows_df, current_t=None):
         # Compute smoothed probabilities & decisions on the sliced windows
@@ -134,17 +157,25 @@ def render():
         if first_idx >= 0 and not windows_df.empty and "win_start_s" in windows_df.columns:
             latency_s = float(windows_df["win_start_s"].iloc[first_idx])
 
-        if is_fault_truth:
+        is_fault_truth_current = bool(windows_df["is_fault"].iloc[-1]) if not windows_df.empty and "is_fault" in windows_df.columns else is_fault_truth
+        current_fault_type = str(windows_df["fault"].iloc[-1]).title() if not windows_df.empty and "fault" in windows_df.columns else cls_name.title()
+
+        if is_fault_truth_current:
             missed_clip    = 1 if alarms_raised == 0 else 0
             fa_clip        = 0
         else:
             missed_clip    = 0
             fa_clip        = 1 if alarms_raised > 0 else 0
 
-        alarm_badge  = status_badge("alarm" if alarms_raised else "ok")
-        alarm_text   = "Alarm" if alarms_raised else "Ok"
-        truth_badge  = status_badge("alarm" if is_fault_truth else "ok")
-        truth_text   = cls_name.title()
+        current_decision = int(decisions[-1]) if len(decisions) > 0 else 0
+        alarm_badge  = status_badge("alarm" if current_decision else "ok")
+        if current_decision:
+            alarm_text = f"Alarm ({current_fault_type})" if is_fault_truth_current else "Alarm (False Pos)"
+        else:
+            alarm_text = "Ok"
+            
+        truth_badge  = status_badge("alarm" if is_fault_truth_current else "ok")
+        truth_text   = current_fault_type
 
         st.markdown(
             f"""
@@ -199,7 +230,7 @@ def render():
             st.plotly_chart(fig_combined, use_container_width=True)
             pfault_note = demo_data.get("p_fault_source", "unknown")
             figcaption(
-                f"Top: 4-channel vibration. Bottom: window-level fault probability — strategy: {strategy_label}, θ={th:.2f}. "
+                f"Top: 4-channel vibration. Bottom: window-level fault probability - strategy: {strategy_label}, θ={th:.2f}. "
                 f"Shaded regions are alarm spans. p_fault source: {pfault_note}."
             )
         else:
@@ -226,7 +257,6 @@ def render():
 
     # ── Render Mode Dispatch ───────────────────────────────────────────────
     if selected_id == "continuous_stream":
-        st.info("Continuous Stream mode. Play the audio, then click Start Live Stream.", icon="ℹ️")
         audio_path = demo_data.get("audio_path")
         if audio_path:
             st.audio(audio_path, format="audio/flac")
@@ -262,7 +292,7 @@ def render():
     col_psd, col_env = st.columns(2)
     if psd:
         with col_psd:
-            st.markdown("**Welch PSD — vibration channel 1**")
+            st.markdown("**Welch PSD - vibration channel 1**")
             fig_psd = figures.create_psd_plot(
                 np.array(psd["f"]), np.array(psd["Pxx"]),
                 bands=psd.get("bands"),
@@ -272,7 +302,7 @@ def render():
 
     if env:
         with col_env:
-            st.markdown("**Envelope — channel 1 (bandpass 1250–10 000 Hz)**")
+            st.markdown("**Envelope - channel 1 (bandpass 1250–10 000 Hz)**")
             t_env = np.linspace(0.0, 5.0, len(env["env_trace"]))
             fig_env = figures.create_envelope_plot(
                 np.array(env["env_trace"]), t_env,
@@ -287,7 +317,7 @@ def render():
 
     if has_ios or has_android:
         st.markdown("---")
-        st.markdown("**Video recordings** — unsynchronised original recordings; model consumes no video.")
+        st.markdown("**Video recordings** - unsynchronised original recordings; model consumes no video.")
         vc1, vc2 = st.columns(2)
         vid_base = config.ASSETS_DIR / "demo" / selected_id
         if has_ios and (vid_base / "video_ios.mp4").exists():
@@ -334,4 +364,4 @@ def render():
         cols = st.columns(min(len(frames), 5))
         for i, fp in enumerate(frames[:10]):
             cols[i % len(cols)].image(fp, use_container_width=True)
-        figcaption("WebP frames — carried in the dataset as visual evidence; not consumed by the current model.")
+        figcaption("WebP frames - carried in the dataset as visual evidence; not consumed by the current model.")

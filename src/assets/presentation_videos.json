@@ -9,22 +9,22 @@
     "ios": true,
     "android": true
   },
-  "abnormal__loose__med_vel80_clean_loose__0001": {
+  "abnormal__loose__med_vel100_clean_loose__0001": {
     "class": "loose",
-    "ios": true,
-    "android": true
+    "ios": false,
+    "android": false
   },
-  "abnormal__screwdrop__med_vel80_clean_screwdrop__0001": {
+  "abnormal__screwdrop__med_vel100_clean_screwdrop__0001": {
     "class": "screwdrop",
-    "ios": true,
-    "android": true
+    "ios": false,
+    "android": false
   },
-  "normal__med_vel60_clean__0001": {
+  "normal__med_vel100_clean__0001": {
     "class": "normal",
-    "ios": true,
-    "android": true
+    "ios": false,
+    "android": false
   },
-  "normal__med_vel80_clean__0001": {
+  "normal__med_vel100_clean__0002": {
     "class": "normal",
     "ios": false,
     "android": false

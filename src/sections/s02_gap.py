@@ -1,4 +1,4 @@
-"""s02_gap.py — Why current practice falls short."""
+"""s02_gap.py - Why current practice falls short."""
 import streamlit as st
 from theme import section_header
 
@@ -13,7 +13,7 @@ Four specific gaps motivate this pipeline:
    insufficient when different fault types produce complementary evidence across modalities.
 
 2. **Fixed thresholds fire on transients.** A hard RMS or temperature limit will trigger on normal
-   operational peaks — start-up, load changes — rather than learning the signal structure of a fault
+   operational peaks - start-up, load changes - rather than learning the signal structure of a fault
    from examples. The result is a high false-alarm rate from the very first day of deployment.
 
 3. **Alarm fatigue destroys operator trust.** When operators ignore alerts because the alert rate is
