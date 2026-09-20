@@ -42,13 +42,13 @@ def render():
     feat_table = pd.DataFrame([
         {
             "Modality": "Vibration (window)",
-            "Per-window features": 156,
+            "Per-window features": "156",
             "Clip-aggregated": vib_n,
             "Rationale": "Time + spectral + envelope + cross-channel; aggregated as mean / std / min / max / median / p90",
         },
         {
             "Modality": "Audio (window)",
-            "Per-window features": 106,
+            "Per-window features": "106",
             "Clip-aggregated": aud_n,
             "Rationale": "RMS / ZCR / spectral centroid / bandwidth / rolloff / entropy + 5 bands + 13 MFCC × {mean,std,min,max} + 13 ΔMFCC × {mean,std}",
         },

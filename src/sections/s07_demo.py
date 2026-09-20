@@ -227,7 +227,8 @@ def render():
             if current_t is not None:
                 fig_combined.update_xaxes(range=[0, total_duration])
 
-            st.plotly_chart(fig_combined, use_container_width=True)
+            key_comb = f"demo_combined_{current_t}" if current_t is not None else "demo_combined"
+            st.plotly_chart(fig_combined, width="stretch", key=key_comb)
             pfault_note = demo_data.get("p_fault_source", "unknown")
             figcaption(
                 f"Top: 4-channel vibration. Bottom: window-level fault probability - strategy: {strategy_label}, θ={th:.2f}. "
@@ -250,7 +251,8 @@ def render():
             fig_spec = figures.create_spectrogram_plot(spec["f"], t_spec, Sxx)
             if current_t is not None:
                 fig_spec.update_xaxes(range=[0, total_duration])
-            st.plotly_chart(fig_spec, use_container_width=True)
+            key_spec = f"demo_spec_{current_t}" if current_t is not None else "demo_spec"
+            st.plotly_chart(fig_spec, width="stretch", key=key_spec)
             figcaption(
                 f"Audio log spectrogram. Parameters: nperseg=1024, noverlap=512; lower quarter of frequency axis shown."
             )
@@ -297,7 +299,7 @@ def render():
                 np.array(psd["f"]), np.array(psd["Pxx"]),
                 bands=psd.get("bands"),
             )
-            st.plotly_chart(fig_psd, use_container_width=True)
+            st.plotly_chart(fig_psd, width="stretch", key="demo_fig_psd")
             figcaption("Physical bands (corrected for 25 kHz): low 0–1250 Hz, mid 1250–5000 Hz, high 5000–12500 Hz.")
 
     if env:
@@ -308,7 +310,7 @@ def render():
                 np.array(env["env_trace"]), t_env,
                 np.array(env["f"]), np.array(env["Pxx"]),
             )
-            st.plotly_chart(fig_env, use_container_width=True)
+            st.plotly_chart(fig_env, width="stretch", key="demo_fig_env")
             figcaption("Envelope extracted via Butterworth bandpass → Hilbert transform → |analytic signal|.")
 
     # ── Video panel ───────────────────────────────────────────────────────
@@ -344,7 +346,7 @@ def render():
                     {c: "{:.4f}" for c in disp_cols if c not in
                      ["window_idx", "is_fault", "win_start_s", "win_end_s"]}
                 ),
-                use_container_width=True,
+                width="stretch",
             )
             figcaption(
                 "Per-window features shown alongside p_fault for the selected clip. "
@@ -363,5 +365,5 @@ def render():
         st.markdown("**Static frames from the clip** (iOS and Android, 1 fps, 5 frames per device).")
         cols = st.columns(min(len(frames), 5))
         for i, fp in enumerate(frames[:10]):
-            cols[i % len(cols)].image(fp, use_container_width=True)
+            cols[i % len(cols)].image(fp, width="stretch")
         figcaption("WebP frames - carried in the dataset as visual evidence; not consumed by the current model.")

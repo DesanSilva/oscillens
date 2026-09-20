@@ -69,7 +69,7 @@ any rerun that would produce different sample IDs or media settings aborts rathe
     with col_cls:
         st.markdown("**Clips by class**")
         fig_cls = figures.create_class_dist_chart(coverage["counts_by_class"])
-        st.plotly_chart(fig_cls, use_container_width=True)
+        st.plotly_chart(fig_cls, width="stretch", key="data_fig_cls")
         figcaption("144 normal / 144 fault; 36 each of dry, lean, loose, screwdrop.")
 
     with col_heat:
@@ -87,7 +87,7 @@ any rerun that would produce different sample IDs or media settings aborts rathe
             )
             fig_heat = figures.apply_plotly_layout(fig_heat, "", 260)
             fig_heat.update_layout(coloraxis_showscale=False)
-            st.plotly_chart(fig_heat, use_container_width=True)
+            st.plotly_chart(fig_heat, width="stretch", key="data_fig_heat")
             figcaption("Fault clips per class per velocity. Normal: 48 each at 60/80/100.")
 
     with col_role:
@@ -98,7 +98,7 @@ any rerun that would produce different sample IDs or media settings aborts rathe
                 list(rb.keys()), [int(v) for v in rb.values()], ""
             )
             fig_role.update_layout(height=260)
-            st.plotly_chart(fig_role, use_container_width=True)
+            st.plotly_chart(fig_role, width="stretch", key="data_fig_role")
             figcaption("fc_role governs fault-classification train/test assignment.")
 
     st.divider()
@@ -129,7 +129,7 @@ any rerun that would produce different sample IDs or media settings aborts rathe
             "screwdrop": "Isolated high-amplitude transient bursts; consistent with a foreign object striking the belt.",
         }
         fig_vib = figures.create_waveform_plot(vib, t_vib, title=f"Vibration - {selected_cls} ({sid})")
-        st.plotly_chart(fig_vib, use_container_width=True)
+        st.plotly_chart(fig_vib, width="stretch", key="data_fig_vib")
         figcaption(hints.get(selected_cls, "") + f" Sample: {sid}.")
     else:
         st.info("Vibration data not available for this clip.")
@@ -139,7 +139,7 @@ any rerun that would produce different sample IDs or media settings aborts rathe
         fig_psd = figures.create_psd_plot(
             np.array(psd["f"]), np.array(psd["Pxx"]), bands=psd.get("bands")
         )
-        st.plotly_chart(fig_psd, use_container_width=True)
+        st.plotly_chart(fig_psd, width="stretch", key="data_fig_psd")
         figcaption(
             f"Welch PSD - channel 1, {selected_cls} clip. "
             "Bands are physical (corrected for 25 kHz storage rate)."

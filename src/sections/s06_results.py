@@ -63,7 +63,7 @@ def render():
             cm_bin,
             f"Binary fused ensemble - {cm_bin.get('split', 'validation clips')}",
         )
-        st.pyplot(fig, use_container_width=True)
+        st.pyplot(fig, width="stretch")
         figcaption("Threshold 0.10. Perfect separation on validation clips.")
 
     with col_b:
@@ -71,7 +71,7 @@ def render():
             cm_mc,
             f"Vibration-only multiclass (4 faults) - {cm_mc.get('split', 'validation clips, faults only')}",
         )
-        st.pyplot(fig, use_container_width=True)
+        st.pyplot(fig, width="stretch")
         figcaption(
             cm_mc.get("note", "")
             + " No audio or fused multiclass model exists - this matrix is vibration-only."
@@ -118,7 +118,7 @@ def render():
 
     # Grouped bar chart
     fig_bar = figures.create_temporal_bar_chart(tc_df)
-    st.plotly_chart(fig_bar, use_container_width=True)
+    st.plotly_chart(fig_bar, width="stretch", key="res_fig_bar")
     figcaption("False alarms vs missed detections across strategies - validation windows.")
 
     st.divider()
